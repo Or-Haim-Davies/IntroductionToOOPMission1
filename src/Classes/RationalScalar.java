@@ -11,39 +11,108 @@ public class RationalScalar implements Scalar {
     }
 
     public String toString(){
+        if(getNumerator()%getDominator()==0)
+            return Integer.toString(getNumerator()/getDominator());
+        else if (getNumerator()/getDominator()>0){
+            RationalScalar result=new RationalScalar(getNumerator(),getDominator());
+            result=result.reduce();
+            return result.getNumerator()+"/"+ result.getDominator();
+        }
+        else {
+            RationalScalar result=new RationalScalar(Math.abs(getNumerator()),
+                    Math.abs(getDominator()));
+            result=result.reduce();
+            return "-"+result.getNumerator()+"/"+ result.getDominator();
+        }
+
+
     }
     public Scalar add(Scalar s){
-        return s.add(this);
+        return s.addRational(this);
     }
 
-    public Scalar add(RationalScalar s){
+    public Scalar addRational(RationalScalar s){
         int numerator1=this.numerator;
         int dominator1=this.dominator;
         int numerator2=s.getNumerator();
         int dominator2=s.getDominator();
         return new RationalScalar(numerator1*dominator2+numerator2*dominator1,dominator1*dominator2);
     }
-    public Scalar add(IntengerScalar s){
+    public Scalar addIntenger(IntengerScalar s){
+        int numerator1=this.numerator;
+        int dominator1=this.dominator;
+        int number2=s.getNumber();
 
+        return new RationalScalar(numerator1+number2*dominator1,dominator1);
     }
-
 
 
     public Scalar mul(Scalar s){
-
+        return s.mul((this));
+    }
+    public Scalar mul(RationalScalar s){
+        int numerator1=this.numerator;
+        int dominator1=this.dominator;
+        int numerator2=s.getNumerator();
+        int dominator2=s.getDominator();
+        return new RationalScalar(numerator1*numerator2,dominator1*dominator2);
+    }
+    public Scalar mul(IntengerScalar s){
+        int numerator1=this.numerator;
+        int dominator1=this.dominator;
+        int number2=s.getNumber();
+        return new RationalScalar(numerator1*number2,dominator1);
     }
     public Scalar neg(){
-
+        return new RationalScalar(-this.numerator,this.dominator);
     }
     public Scalar power(int exponent){
+        int newNumerator=1;
+        int newDominator=1;
+        for (int i=0;i<exponent;i++){
+            newNumerator*=getNumerator();
+            newDominator*=getDominator();
+        }
 
+        return new RationalScalar(newNumerator,newDominator);
     }
     public int sign(){
-
+        if(getNumerator()==0)
+            return 0;
+        int signNumerator=0;
+        int signDominator=0;
+        if(getNumerator()>0)
+            signNumerator=1;
+        else
+            signNumerator=-1;
+        if (getDominator()>0)
+            signDominator=1;
+        else
+            signDominator=-1;
+        return signNumerator*signDominator;
     }
     public boolean equals(Object o){
-
+        if(o instanceof Scalar){
+            o.equals(this);
+        }
+        return false;
     }
+    public boolean equals(RationalScalar o){
+        if(o instanceof Scalar){
+            return (getNumerator()==o.getNumerator())&&(getDominator()==o.getDominator());
+        }
+        return false;
+    }
+    public boolean equals(IntengerScalar o){
+        if(o instanceof Scalar){
+            if(getDominator()==1) {
+                return getNumerator() == o.getNumber();
+            }
+        }
+        return false;
+    }
+
+
     public RationalScalar reduce() {
         int gcd = 0;
         int remainder = 0;
