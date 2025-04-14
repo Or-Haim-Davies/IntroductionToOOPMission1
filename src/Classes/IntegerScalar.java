@@ -1,5 +1,7 @@
 package Classes;
 
+import jdk.jshell.spi.ExecutionControl;
+
 public class IntegerScalar implements Scalar {
     private int number;
     public String toString(){

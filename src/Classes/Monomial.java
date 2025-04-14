@@ -29,6 +29,11 @@ public class Monomial {
     }
     public boolean equals(Object o){
         if(o instanceof Monomial){
+            if(coefficient.equals(new IntegerScalar(0))&&((Monomial)o).getCoefficient().equals(new IntegerScalar(0))){
+                return true;
+            } else if (exponent==0&&((Monomial)o).getExponent()==0) {
+                return true;
+            }
             return ((Monomial) o).exponent == this.exponent && ((Monomial) o).coefficient.equals(this.coefficient);
         }
         return false;

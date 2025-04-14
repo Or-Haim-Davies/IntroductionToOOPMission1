@@ -10,8 +10,8 @@ public interface Scalar {
     public Scalar neg();
     public Scalar power(int exponent);
     public int sign();
-    boolean equals(Object o);
-    boolean equalsInteger(IntegerScalar o);
-    boolean equalsRational(RationalScalar o);
+    public boolean equals(Object o);
+    public boolean equalsInteger(IntegerScalar o);
+    public boolean equalsRational(RationalScalar o);
 
 }
