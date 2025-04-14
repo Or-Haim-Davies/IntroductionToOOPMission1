@@ -7,6 +7,9 @@ public class IntengerScalar implements Scalar {
     public String toString(){
         return number+"";
     }
+    public int getNumber(){
+        return number;
+    }
     public IntengerScalar(int number){this.number=number;}
     public Scalar add(Scalar s){
         return s.add(this);
@@ -50,9 +53,15 @@ public class IntengerScalar implements Scalar {
 
     }
     public boolean equals(Object o){
-        if(o instanceof IntengerScalar){
-            return ((IntengerScalar) o).number == this.number;
+        if(o instanceof Scalar){
+            return (o.equals(this));
         }
-        else {return false;}
+        return false;
+    }
+    public boolean equals(IntengerScalar o){
+        return o.getNumber()==this.number;
+    }
+    public boolean equals(RationalScalar o){
+        return o.getNumerator()/o.getDominator()+o.getNumerator()%o.getDominator()==this.number;
     }
 }
