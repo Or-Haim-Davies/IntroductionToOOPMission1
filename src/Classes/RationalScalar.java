@@ -24,5 +24,14 @@ public class RationalScalar implements Scalar {
     public boolean equals(Object o){
 
     }
-    public Rational reduce()
+    public Rational reduce(){
+        
+        int gcd=0;
+          while (dominator != 0){
+        remainder = numerator % dominator;
+        numerator = dominator;
+        dominator = remainder;
+     }
+        
+    return a
 }
