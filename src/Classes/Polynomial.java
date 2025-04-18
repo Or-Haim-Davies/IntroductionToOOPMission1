@@ -4,6 +4,9 @@ import java.util.TreeMap;
 
 public class Polynomial {
     private TreeMap<Integer,Monomial> monomials;
+    private Polynomial(){
+        monomials=new TreeMap<>();
+    }
     public static Polynomial build(String input){
         Polynomial result = new Polynomial();
         int levelCounter=0;
@@ -30,7 +33,7 @@ public class Polynomial {
                 }
                 else{
                     String number="";
-                    for(int j=0;j< parts.length;j++){
+                    for(int j=0;j< parts[i].length();j++){
                          number=number+parts[i].charAt(j);
                     }
                     result.monomials.put(i, new Monomial(i, new IntegerScalar(Integer.parseInt(number))));
@@ -61,7 +64,13 @@ public class Polynomial {
         for(int j =0;j<this.monomials.size();j++){
             for (int i=0;i<p.monomials.size();i++){
                 if(p.getMonomials().containsKey(i)&&this.getMonomials().containsKey(j)){
-                    result.monomials.put(i,this.monomials.get(i).mul(p.monomials.get(i)));
+                    if(result.monomials.containsKey(i+j)){
+                        result.monomials.put(i+j,result.monomials.get(j+i).add(this.monomials.get(j).mul(p.monomials.get(i))));
+                    }
+                    else {
+                        result.monomials.put(j+i,this.monomials.get(j).mul(p.monomials.get(i)));
+
+                    }
                 }
             }
         }
@@ -111,12 +120,24 @@ public class Polynomial {
         for(int i=0; i<monomials.size();i++){
             if(monomials.containsKey(i)){
                 if(monomials.get(i).toString().charAt(0)=='-'){
-                    result.append(monomials.get(i).toString());
-                } else if (i==0) {
+                    if(result.length()==0){
+                        result.append(monomials.get(i).toString());
+                    }
+                    else {
+                        result.append(" "+monomials.get(i).toString());
+
+                    }
+                } else if (i==0&&monomials.get(i).toString().charAt(0)!='0') {
                     result.append(monomials.get(i).toString());
                 }
-                else {
-                    result.append("+"+monomials.get(i).toString());
+                else if(monomials.get(i).toString().charAt(0)!='0'){
+                    if(result.length()==0){
+                        result.append(monomials.get(i).toString());
+                    }
+                    else {
+                        result.append(" +"+monomials.get(i).toString());
+
+                    }
                 }
             }
         }
