@@ -11,18 +11,26 @@ public class RationalScalar implements Scalar {
     }
 
     public String toString(){
+        IntegerScalar numerator=new IntegerScalar(getNumerator());
+        IntegerScalar dominator=new IntegerScalar(getDominator());
+        System.out.println(getNumerator()+"/"+getDominator());
         if(getNumerator()%getDominator()==0)
             return Integer.toString(getNumerator()/getDominator());
-        else if (getNumerator()/getDominator()>0){
+        else if (numerator.sign()*dominator.sign()>0){
             RationalScalar result=new RationalScalar(getNumerator(),getDominator());
             result=result.reduce();
-            return result.getNumerator()+"/"+ result.getDominator();
+            return Math.abs(result.getNumerator())+"/"+ Math.abs(result.getDominator());
         }
         else {
-            RationalScalar result=new RationalScalar(Math.abs(getNumerator()),
-                    Math.abs(getDominator()));
+            RationalScalar result=new RationalScalar(getNumerator(),
+                    getDominator());
+            if(getNumerator()<0){
+                result=result.reduce();
+                return result.getNumerator()+"/"+ result.getDominator();
+            }
+
             result=result.reduce();
-            return "-"+result.getNumerator()+"/"+ result.getDominator();
+            return "-"+result.getNumerator()+"/"+ Math.abs(result.getDominator());
         }
 
 
@@ -93,12 +101,29 @@ public class RationalScalar implements Scalar {
     }
     public boolean equals(Object o){
         if(o instanceof Scalar){
-            ((Scalar)o).equalsRational(this);
+           return  ((Scalar)o).equalsRational(this);
         }
         return false;
     }
     public boolean equalsRational(RationalScalar o){
-        return (o.getNumerator()/o.getDominator()+o.getNumerator()%o.getDominator()==this.numerator/this.dominator+this.numerator%this.dominator);
+       RationalScalar thisRationalScalar=this.reduce();
+       RationalScalar oRationalScalar=o.reduce();
+        if(this.sign()!=o.sign())
+            return false;
+        else {
+            //System.out.println(getNumerator() / getDominator() == o.getNumerator() / o.getDominator());
+            //return getNumerator() / getDominator() == o.getNumerator() / o.getDominator();
+           /* int a1=thisRationalScalar.getNumerator();
+            int a2=thisRationalScalar.getDominator();
+            int b1=oRationalScalar.getNumerator();
+            int b2=oRationalScalar.getDominator();
+            boolean equals=thisRationalScalar.getNumerator()==oRationalScalar.getNumerator()&&thisRationalScalar.getDominator()==oRationalScalar.getDominator();*/
+            return Math.abs(thisRationalScalar.getNumerator())==Math.abs(oRationalScalar.getNumerator())&&
+                    Math.abs(thisRationalScalar.getDominator())==Math.abs(oRationalScalar.getDominator());
+        }
+        //return this.getNumerator()==o.getNumerator()&&this.getDominator()==o.getDominator();
+
+        //return (o.getNumerator()/o.getDominator()+o.getNumerator()%o.getDominator()==this.numerator/this.dominator+this.numerator%this.dominator);
     }
     public boolean equalsInteger(IntegerScalar o){
 
@@ -115,7 +140,13 @@ public class RationalScalar implements Scalar {
             numerator = dominator;
             dominator = remainder;
         }
-        return new RationalScalar(this.numerator/numerator,this.dominator/numerator);
+        if(this.numerator<0&&this.dominator<0){
+            this.numerator*=-1;
+            this.dominator*=-1;
+        }
+
+
+        return new RationalScalar(this.numerator/Math.abs(numerator),this.dominator/Math.abs(numerator));
     }
 
     public int getNumerator() {
