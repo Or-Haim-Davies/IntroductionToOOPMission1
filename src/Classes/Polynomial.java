@@ -17,11 +17,11 @@ public class Polynomial {
                     StringBuilder numerator= new StringBuilder();
                     StringBuilder dominator= new StringBuilder();
                     boolean divider=true;
-                    for(int j=0;j< parts.length;j++){
+                    for(int j=0;j< parts[i].length();j++){
                         if(parts[i].charAt(j)=='/'){
                             divider=false;
                         }
-                        if(divider){
+                        else if(divider){
                             numerator.append(parts[i].charAt(j));
                         }
                         else {
