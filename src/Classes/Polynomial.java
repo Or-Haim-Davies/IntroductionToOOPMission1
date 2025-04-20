@@ -34,7 +34,7 @@ public class Polynomial {
                 else{
                     String number="";
                     for(int j=0;j< parts[i].length();j++){
-                         number=number+parts[i].charAt(j);
+                        number=number+parts[i].charAt(j);
                     }
                     result.monomials.put(i, new Monomial(i, new IntegerScalar(Integer.parseInt(number))));
                 }
@@ -100,7 +100,7 @@ public class Polynomial {
                 for (int i=0;i<this.monomials.size();i++){
                     if(((Polynomial)(o)).getMonomials().containsKey(i)&&this.getMonomials().containsKey(i)){
                         if(!((Polynomial)(o)).getMonomials().get(i).equals(this.getMonomials().get(i))){
-                           return false;
+                            return false;
                         }
                     } else if (((Polynomial)(o)).getMonomials().containsKey(i)) {
                         return false;
@@ -124,7 +124,7 @@ public class Polynomial {
                         result.append(monomials.get(i).toString());
                     }
                     else {
-                        result.append(" "+monomials.get(i).toString());
+                        result.append(""+monomials.get(i).toString());
 
                     }
                 } else if (i==0&&monomials.get(i).toString().charAt(0)!='0') {
@@ -135,7 +135,7 @@ public class Polynomial {
                         result.append(monomials.get(i).toString());
                     }
                     else {
-                        result.append(" +"+monomials.get(i).toString());
+                        result.append("+"+monomials.get(i).toString());
 
                     }
                 }
