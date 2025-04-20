@@ -80,7 +80,7 @@ public class Polynomial {
         Scalar result=new IntegerScalar(0);
         for(int i=0;i<this.monomials.size();i++){
             if(this.monomials.containsKey(i)){
-                result.add(this.monomials.get(i).evaluate(s));
+                result=result.add(this.monomials.get(i).evaluate(s));
             }
         }
         return result;
