@@ -13,7 +13,6 @@ public class RationalScalar implements Scalar {
     public String toString(){
         IntegerScalar numerator=new IntegerScalar(getNumerator());
         IntegerScalar dominator=new IntegerScalar(getDominator());
-        System.out.println(getNumerator()+"/"+getDominator());
         if(getNumerator()%getDominator()==0)
             return Integer.toString(getNumerator()/getDominator());
         else if (numerator.sign()*dominator.sign()>0){
